@@ -1,10 +1,9 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {secondColor} from '../../../constants/Colors';
-import {mediumFontSize, smallPadding} from '../../../constants/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FilterSelections from '../FilterSelections';
 import SelectionItem from '../../../customComponents/SelectionItem';
+import styles from './styles';
 
 const FilterSectionItem = props => {
   const {item, toggleSection, onSelectFilter, onToggleSwitch, onChangeSlider} =
@@ -12,19 +11,11 @@ const FilterSectionItem = props => {
   const {Id, Name, isOpen} = item;
 
   return (
-    <View
-      style={{
-        paddingVertical: smallPadding,
-      }}>
+    <View style={styles.root}>
       <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
+        style={styles.rowStyle}
         onPress={() => toggleSection(Id)}>
-        <Text style={{color: secondColor, fontSize: mediumFontSize}}>
-          {Name}
-        </Text>
+        <Text style={styles.sectionName}>{Name}</Text>
         <MaterialIcons
           name={isOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
           size={25}

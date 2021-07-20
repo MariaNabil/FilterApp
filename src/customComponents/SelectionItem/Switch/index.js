@@ -6,16 +6,12 @@ import {
   switchTrackColor,
   thirdColor,
 } from '../../../constants/Colors';
+import styles from './styles';
 const SwitchItem = props => {
   const {Id, Name, isSelected, onToggleSwitch} = props;
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
-      <Text style={{color: secondColor}}>{Name}</Text>
+    <View style={styles.root}>
+      <Text style={styles.filterName}>{Name}</Text>
       <Switch
         trackColor={{false: darkColor, true: switchTrackColor}}
         thumbColor={isSelected ? secondColor : thirdColor}

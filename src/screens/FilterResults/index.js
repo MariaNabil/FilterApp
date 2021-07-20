@@ -7,12 +7,11 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {mainColor, secondColor} from '../../constants/Colors';
 import FiltersData from '../../constants/FiltersData';
-import {largePadding, smallPadding} from '../../constants/styles';
 import ItemSeparator from '../../customComponents/ItemSeparator';
 import Header from '../../customComponents/Header';
 import FilterSectionItem from './FilterSectionItem';
+import styles from './styles';
 
 const FilterResults = () => {
   const [newFiltersData, setNewFiltersData] = useState(
@@ -107,7 +106,7 @@ const FilterResults = () => {
             onChangeSlider={onChangeSlider}
           />
         )}
-        style={{paddingHorizontal: largePadding}}
+        style={styles.flatList}
         ItemSeparatorComponent={() => <ItemSeparator />}></FlatList>
     );
   };
@@ -140,32 +139,14 @@ const FilterResults = () => {
 
   const renderShowSelectedItemsButton = () => {
     return (
-      <TouchableOpacity
-        style={{
-          borderRadius: 20,
-          borderColor: secondColor,
-          borderWidth: 2,
-          paddingHorizontal: smallPadding,
-          paddingVertical: smallPadding,
-          alignItems: 'center',
-          marginVertical: largePadding,
-          marginHorizontal: largePadding,
-        }}
-        onPress={ShowAlert}>
-        <Text
-          style={{
-            color: secondColor,
-            fontSize: 15,
-            fontWeight: 'bold',
-          }}>
-          {'Show Selected Items'}
-        </Text>
+      <TouchableOpacity style={styles.showItemsButton} onPress={ShowAlert}>
+        <Text style={styles.showItemsButtonLabel}>{'Show Selected Items'}</Text>
       </TouchableOpacity>
     );
   };
 
   return (
-    <View style={{backgroundColor: mainColor, flex: 1}}>
+    <View style={styles.root}>
       <Header />
       <ScrollView>
         {renderFilterSections()}
