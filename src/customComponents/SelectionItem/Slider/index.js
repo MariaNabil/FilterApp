@@ -9,7 +9,7 @@ const SliderItem = props => {
     Max = 100,
     isSingle = true,
     Start = 0,
-    End = props.Max,
+    End = 0,
     onChangeSlider,
     Id,
   } = props;

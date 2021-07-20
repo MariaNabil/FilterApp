@@ -1,8 +1,15 @@
-import {FlatList, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
-import {mainColor} from '../../constants/Colors';
+import {mainColor, secondColor} from '../../constants/Colors';
 import FiltersData from '../../constants/FiltersData';
-import {largePadding} from '../../constants/styles';
+import {largePadding, smallPadding} from '../../constants/styles';
 import ItemSeparator from '../../customComponents/ItemSeparator';
 import Header from '../../customComponents/Header';
 import FilterSectionItem from './FilterSectionItem';
@@ -105,10 +112,65 @@ const FilterResults = () => {
     );
   };
 
+  const getSelectedItems = items => {
+    let SelectedItems = '';
+    for (let i = 0; i < items?.length; i++) {
+      let item = items[i];
+      if (item.Type == 'multiSelector' || item.Type == 'checkbox') {
+        item.Items.map(i => {
+          if (i.isSelected) SelectedItems += i.Name + '\n';
+        });
+      } else if (item.Type == 'switch') {
+        if (item.isSelected) SelectedItems += item.Name + '\n';
+      } else if (item.Type == 'slider' || item.Type == 'doubleSlider')
+        if (
+          item.Start !== undefined &&
+          item.Start !== null &&
+          item.Start !== item.End
+        )
+          SelectedItems +=
+            item.Name + ' from ' + item.Start + ' To ' + item.End + '\n';
+    }
+    return SelectedItems;
+  };
+
+  const ShowAlert = () => {
+    Alert.alert('Selected Items', getSelectedItems(newFiltersData));
+  };
+
+  const renderShowSelectedItemsButton = () => {
+    return (
+      <TouchableOpacity
+        style={{
+          borderRadius: 20,
+          borderColor: secondColor,
+          borderWidth: 2,
+          paddingHorizontal: smallPadding,
+          paddingVertical: smallPadding,
+          alignItems: 'center',
+          marginVertical: largePadding,
+          marginHorizontal: largePadding,
+        }}
+        onPress={ShowAlert}>
+        <Text
+          style={{
+            color: secondColor,
+            fontSize: 15,
+            fontWeight: 'bold',
+          }}>
+          {'Show Selected Items'}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={{backgroundColor: mainColor, flex: 1}}>
       <Header />
-      {renderFilterSections()}
+      <ScrollView>
+        {renderFilterSections()}
+        {renderShowSelectedItemsButton()}
+      </ScrollView>
     </View>
   );
 };
